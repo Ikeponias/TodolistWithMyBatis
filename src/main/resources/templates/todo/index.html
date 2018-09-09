@@ -18,19 +18,21 @@
 		</tr>
 		<tr th:each="todo:${todos}" th:object="${todo}">
 			<td>
-				<input type="hidden" name="title" th:value="*{title}" /> 
-				<input type="hidden" name="details" th:value="*{details}" /> 
-				<input type="hidden" name="finished" th:value="not *{finished}" /> 
-				<input type="submit" value="DONE!" />
+				<form th:action="|/todo/update|" th:method="put">
+					<input type="hidden" name="title" th:value="*{title}" />
+					<input type="hidden" name="details" th:value="*{details}" />
+					<input type="hidden" name="finished" th:value="not *{finished}" />
+					<input type="submit" value="DONE!" />
+				</form>
 			</td>
 			<td th:text="*{id}">ID</td>
-			<td th:text="*{title}">TITLE</a></td>
+			<td th:text="*{title}">TITLE</td>
 			<td th:text="*{details}">DETAIL</td>
 			<td th:text="*{finished}">FINISHED?</td>
-			<td><input type="submit" value="delete" /></td>
+			<td><form th:action="|/todo/delete/*{id}|" th:method="delete"><input type="submit" value="delete" /></form></td>
 		</tr>
 	</table>
-	<form th:action="@{/todo/create}" th:object="${todoForm}" method="post">
+	<form th:action="|/todo/create|" th:object="${todoForm}" th:method="post">
 		<div>
 			Title: <input type="text" th:field="*{title}" />
 		</div>

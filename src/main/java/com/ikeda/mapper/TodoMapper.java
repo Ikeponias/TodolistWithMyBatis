@@ -2,10 +2,12 @@ package com.ikeda.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
 
 import com.ikeda.domain.model.Todo;
 
@@ -15,9 +17,15 @@ public interface TodoMapper {
 	@Options(useGeneratedKeys = true)
 	void insert(Todo todo);
 
-	@Select("SELECT id, title, details, finished FROM todo WHERE id = #{id}")
+	@Update("UPDATE todo SET title = #{title}, details = #{details}, finished = #{finished} WHERE id = #{id}")
+	void update(Todo todo);
+
+	@Select("SELECT * FROM todo WHERE id = #{id}")
 	Todo find(int id);
 
-	@Select("SELECT id, title, details, finished FROM todo")
+	@Select("SELECT * FROM todo")
 	List<Todo> findAll();
+
+	@Delete("DELETE FROM todo WHERE id = #{id}")
+	void delete(Long id);
 }
