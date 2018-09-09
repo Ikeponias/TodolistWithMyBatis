@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,5 +34,19 @@ public class TodoController {
 		todoMapper.insert(todoForm);
 
 		return "redirect:";
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public String update(@ModelAttribute Todo todoForm) {
+		todoMapper.update(todoForm);
+
+		return "redirect:/todo";
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public String delete(@PathVariable("id") Long id) {
+		todoMapper.delete(id);
+
+		return "redirect:/todo";
 	}
 }
