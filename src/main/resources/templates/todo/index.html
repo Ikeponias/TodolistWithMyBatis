@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: base_header('Todo Index')">
+</head>
+
+<body>
+	<div th:replace="layout::header"></div>
+	<h1>Todo:Index</h1>
+	<table class="my-center">
+		<tr>
+			<th>check</th>
+			<th>ID</th>
+			<th>TITLE</th>
+			<th>DETAILS</th>
+			<th>FINISHED?</th>
+			<th>DELETE</th>
+		</tr>
+		<tr th:each="todo:${todos}" th:object="${todo}">
+			<td>
+				<input type="hidden" name="title" th:value="*{title}" /> 
+				<input type="hidden" name="details" th:value="*{details}" /> 
+				<input type="hidden" name="finished" th:value="not *{finished}" /> 
+				<input type="submit" value="DONE!" />
+			</td>
+			<td th:text="*{id}">ID</td>
+			<td th:text="*{title}">TITLE</a></td>
+			<td th:text="*{details}">DETAIL</td>
+			<td th:text="*{finished}">FINISHED?</td>
+			<td><input type="submit" value="delete" /></td>
+		</tr>
+	</table>
+	<form th:action="@{/todo/create}" th:object="${todoForm}" method="post">
+		<div>
+			Title: <input type="text" th:field="*{title}" />
+		</div>
+		<div>
+			Details: <input type="text" th:field="*{details}" />
+		</div>
+		<div>
+			<input type="submit" value="Submit" />
+		</div>
+	</form>
+	<div th:replace="layout::footer"></div>
+</body>
+
+</html>
