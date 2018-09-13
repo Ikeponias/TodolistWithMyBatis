@@ -16,6 +16,7 @@ import com.ikeda.mapper.TodoMapper;
 @Controller
 @RequestMapping("todo")
 public class TodoController {
+
 	@Autowired
 	TodoMapper todoMapper;
 
