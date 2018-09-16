@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ikeda.domain.model.Todo;
-import com.ikeda.mapper.TodoMapper;
+import com.ikeda.domain.service.TodoService;
 
 @Controller
 @RequestMapping("todo")
 public class TodoController {
 
 	@Autowired
-	TodoMapper todoMapper;
+	TodoService todoService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String index(Model model) {
-		List<Todo> todos = todoMapper.findAll();
+		List<Todo> todos = todoService.findAll();
 
 		model.addAttribute("todos", todos);
 		model.addAttribute("todoForm", new Todo());
@@ -32,21 +32,21 @@ public class TodoController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@ModelAttribute Todo todoForm) {
-		todoMapper.insert(todoForm);
+		todoService.save(todoForm);
 
 		return "redirect:";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public String update(@ModelAttribute Todo todoForm) {
-		todoMapper.update(todoForm);
+		todoService.save(todoForm);
 
 		return "redirect:/todo";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable("id") Long id) {
-		todoMapper.delete(id);
+		todoService.delete(id);
 
 		return "redirect:/todo";
 	}
