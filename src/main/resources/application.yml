@@ -1,0 +1,6 @@
+logging:
+  level:
+    org.springframework: WARN
+    com.ikeda.mapper.TodoMapper: DEBUG
+    file:
+    path: logs
