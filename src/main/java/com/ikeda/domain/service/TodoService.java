@@ -21,13 +21,22 @@ public class TodoService {
     return todos;
   }
 
+  @Transactional(readOnly = true)
+  public Todo find(Long id) {
+    Todo todo = todoMapper.selectById(id);
+
+    return todo;
+  }
+
   @Transactional
-  public void save(Todo todo) {
+  public String save(Todo todo) {
     if (todoMapper.selectById(todo.getId()) == null) {
       todoMapper.insert(todo);
-      return;
+      return "Insert";
     }
+
     todoMapper.update(todo);
+    return "Update";
   }
 
   @Transactional
