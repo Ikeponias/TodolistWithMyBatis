@@ -22,7 +22,7 @@ public class TodoController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String index(Model model) {
-		List<Todo> todos = todoService.findAll();
+		List<Todo> todos = todoService.selectAll();
 
 		model.addAttribute("todos", todos);
 		model.addAttribute("todoForm", new Todo());

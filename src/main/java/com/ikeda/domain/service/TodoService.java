@@ -15,33 +15,52 @@ public class TodoService {
   TodoMapper todoMapper;
 
   @Transactional(readOnly = true)
-  public List<Todo> findAll() {
+  public List<Todo> selectAll() {
     List<Todo> todos = todoMapper.selectAll();
 
     return todos;
   }
 
   @Transactional(readOnly = true)
-  public Todo find(Long id) {
+  public Todo selectById(Long id) {
     Todo todo = todoMapper.selectById(id);
 
     return todo;
   }
 
+  // SharedService実装後そちらに記載しこちらは削除
   @Transactional
-  public String save(Todo todo) {
+  public Boolean save(Todo todo) {
     if (todoMapper.selectById(todo.getId()) == null) {
       todoMapper.insert(todo);
-      return "Insert";
+
+      return false;
     }
 
     todoMapper.update(todo);
-    return "Update";
+
+    return true;
   }
 
   @Transactional
-  public void delete(Long id) {
+  public Boolean insert(Todo todo) {
+    todoMapper.insert(todo);
+
+    return true;
+  }
+
+  @Transactional
+  public Boolean update(Todo todo) {
+    todoMapper.update(todo);
+
+    return true;
+  }
+
+  @Transactional
+  public Long delete(Long id) {
     todoMapper.deleteById(id);
+
+    return id;
   }
 
 }

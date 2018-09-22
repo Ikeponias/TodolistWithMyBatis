@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
@@ -25,10 +26,10 @@ public class TodoServiceTest {
   private Todo todo;
 
   @Before
+  @Sql(statements = { "TRUNCATE TABLE todo" })
   public void setUp() {
     // 準備：テストデータ
     todo = new Todo();
-    todo.setId(0L);
     todo.setTitle("Sample Title");
     todo.setDetails("Sample Details");
     todo.setFinished(false);
@@ -37,8 +38,21 @@ public class TodoServiceTest {
   @Test
   public void データの挿入() {
     // 実行
-    String result = todoService.save(todo);
+    final Boolean isAlreadyExist = todoService.save(todo);
+
     // 検証
-    assertThat(result).isEqualTo("Insert");
+    assertThat(isAlreadyExist).isEqualTo(false);
+  }
+
+  @Test
+  public void データの削除() {
+    // 前処理
+    todoService.save(todo);
+
+    // 実行
+    final Long deletedId = todoService.delete(0L);
+
+    // 検証
+    assertThat(deletedId).isEqualTo(0L);
   }
 }
