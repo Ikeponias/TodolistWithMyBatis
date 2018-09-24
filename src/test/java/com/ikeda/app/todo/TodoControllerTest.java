@@ -13,14 +13,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.ResultActions;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class TodoControllerTest {
   private MockMvc mockMvc;
+  private ResultActions resultActionsTodoIndex;
 
   @Autowired
   TodoController todoController;
@@ -29,24 +32,24 @@ public class TodoControllerTest {
   TodoService todoService;
 
   @Before
-  public void setup() {
+  public void setup() throws Exception {
     mockMvc = MockMvcBuilders.standaloneSetup(todoController).build();
+    resultActionsTodoIndex = mockMvc.perform(get("/todo"));
   }
 
   @Test
   public void Indexのリクエストに対してレスポンスのステータスコードが正しいか() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/todo")).andExpect(MockMvcResultMatchers.status().isOk());
+    resultActionsTodoIndex.andExpect(status().isOk());
   }
 
   @Test
   public void Indexのリクエストに対してIndexのViewを返しているか() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/todo")).andExpect(MockMvcResultMatchers.view().name("todo/index"));
+    resultActionsTodoIndex.andExpect(view().name("todo/index"));
   }
 
   @Test
   public void Indexのリクエストに対してModelに正しいtodosを詰められているか() throws Exception {
     List<Todo> todos = todoService.selectAll();
-    mockMvc.perform(MockMvcRequestBuilders.get("/todo"))
-        .andExpect(MockMvcResultMatchers.model().attribute("todos", todos));
+    resultActionsTodoIndex.andExpect(model().attribute("todos", todos));
   }
 }
