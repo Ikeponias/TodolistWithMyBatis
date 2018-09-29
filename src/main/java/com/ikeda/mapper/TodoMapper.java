@@ -8,13 +8,13 @@ import com.ikeda.domain.model.Todo;
 
 @Mapper
 public interface TodoMapper {
-	void insert(Todo todo);
+	boolean insert(Todo todo);
 
-	void update(Todo todo);
+	boolean update(Todo todo);
 
 	Todo selectById(Long id);
 
 	List<Todo> selectAll();
 
-	void deleteById(Long id);
+	boolean deleteById(Long id);
 }

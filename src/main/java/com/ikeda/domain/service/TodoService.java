@@ -6,6 +6,7 @@ import com.ikeda.domain.model.Todo;
 import com.ikeda.mapper.TodoMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,51 +17,37 @@ public class TodoService {
 
   @Transactional(readOnly = true)
   public List<Todo> selectAll() {
-    List<Todo> todos = todoMapper.selectAll();
-
-    return todos;
+    return todoMapper.selectAll();
   }
 
   @Transactional(readOnly = true)
   public Todo selectById(Long id) {
-    Todo todo = todoMapper.selectById(id);
-
-    return todo;
+    return todoMapper.selectById(id);
   }
 
   // SharedService実装後そちらに記載しこちらは削除
   @Transactional
-  public Boolean save(Todo todo) {
+  public boolean save(@NonNull final Todo todo) {
     if (todoMapper.selectById(todo.getId()) == null) {
-      todoMapper.insert(todo);
-
-      return false;
+      return todoMapper.insert(todo);
     }
 
-    todoMapper.update(todo);
-
-    return true;
+    return todoMapper.update(todo);
   }
 
   @Transactional
-  public Boolean insert(Todo todo) {
-    todoMapper.insert(todo);
-
-    return true;
+  public boolean insert(Todo todo) {
+    return todoMapper.insert(todo);
   }
 
   @Transactional
-  public Boolean update(Todo todo) {
-    todoMapper.update(todo);
-
-    return true;
+  public boolean update(Todo todo) {
+    return todoMapper.update(todo);
   }
 
   @Transactional
-  public Long delete(Long id) {
-    todoMapper.deleteById(id);
-
-    return id;
+  public boolean delete(Long id) {
+    return todoMapper.deleteById(id);
   }
 
 }
