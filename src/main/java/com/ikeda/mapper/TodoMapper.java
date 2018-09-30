@@ -10,7 +10,7 @@ import com.ikeda.domain.model.Todo;
 public interface TodoMapper {
 	boolean insert(Todo todo);
 
-	boolean update(Todo todo);
+	boolean update(Long id, Todo todo);
 
 	Todo selectById(Long id);
 

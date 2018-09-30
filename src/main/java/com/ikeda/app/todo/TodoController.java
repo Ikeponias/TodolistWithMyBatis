@@ -35,23 +35,23 @@ public class TodoController {
 		return "todo/index";
 	}
 
-	@PostMapping(value = "/create")
+	@PostMapping(value = "")
 	@ApiOperation(value = "TODOを新規作成する", notes = "ページを表示")
 	public String create(@ModelAttribute Todo todoForm) {
-		todoService.save(todoForm);
-
-		return "redirect:";
-	}
-
-	@PutMapping(value = "/update")
-	@ApiOperation(value = "TODOを更新する", notes = "ページを表示")
-	public String update(@ModelAttribute Todo todoForm) {
-		todoService.save(todoForm);
+		todoService.insert(todoForm);
 
 		return "redirect:/todo";
 	}
 
-	@DeleteMapping(value = "/delete/{id}")
+	@PutMapping(value = "/{id}")
+	@ApiOperation(value = "TODOを更新する", notes = "ページを表示")
+	public String update(@PathVariable("id") Long id, @ModelAttribute Todo todoForm) {
+		todoService.update(id, todoForm);
+
+		return "redirect:/todo";
+	}
+
+	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "TODOを削除する", notes = "ページを表示")
 	public String delete(@PathVariable("id") Long id) {
 		todoService.delete(id);
