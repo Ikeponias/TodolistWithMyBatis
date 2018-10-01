@@ -22,14 +22,14 @@
       INTO 
         todo (title, details, finished) 
       VALUES 
-        (#{title}, #{details}, #{finished})
+        (#{todo.title}, #{todo.details}, #{todo.finished})
     </insert>
 
     <update id="update">
       UPDATE 
         todo 
       SET 
-        title = #{title}, details = #{details}, finished = #{finished} 
+        title = #{todo.title}, details = #{todo.details}, finished = #{todo.finished} 
       WHERE 
         id = #{id}
     </update>
