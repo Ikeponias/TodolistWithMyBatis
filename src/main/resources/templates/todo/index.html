@@ -18,7 +18,7 @@
 		</tr>
 		<tr th:each="todo:${todos}" th:object="${todo}">
 			<td>
-				<form th:action="@{'/todo/' + *{id}}" th:method="put">
+				<form th:action="@{/todo/{id}(id=*{id})}" th:method="put">
 					<input type="hidden" name="id" th:value="*{id}" />
 					<input type="hidden" name="title" th:value="*{title}" />
 					<input type="hidden" name="details" th:value="*{details}" />
@@ -30,7 +30,7 @@
 			<td th:text="*{title}">TITLE</td>
 			<td th:text="*{details}">DETAIL</td>
 			<td th:text="*{finished}">FINISHED?</td>
-			<td><form th:action="@{'/todo/' + *{id}}" th:method="delete"><input type="submit" value="delete" /></form></td>
+			<td><form th:action="@{/todo/{id}(id=*{id})}" th:method="delete"><input type="submit" value="delete" /></form></td>
 		</tr>
 	</table>
 	<form th:action="@{/todo}" th:object="${todoForm}" th:method="post">
