@@ -37,7 +37,7 @@ public class TodoController {
 
 	@PostMapping(value = "")
 	@ApiOperation(value = "TODOを新規作成する", notes = "ページを表示")
-	public String create(@ModelAttribute Todo todoForm) {
+	public String create(@ModelAttribute("todoForm") Todo todoForm) {
 		todoService.insert(todoForm);
 
 		return "redirect:/todo";

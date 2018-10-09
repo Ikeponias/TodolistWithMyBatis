@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(value = "/api/todo")
@@ -22,13 +23,14 @@ public class TodoAPIController {
   TodoService todoService;
 
   @GetMapping(value = "", produces = "application/json")
-  @ApiOperation(value = "全てのTODOを取得する", notes = "JSON形式で返る")
+  @ApiOperation(value = "全てのTODOを取得する", notes = "", response = Todo.class, responseContainer = "List")
   public ResponseEntity<List<Todo>> indexJson() {
     return ResponseEntity.ok(todoService.selectAll());
   }
 
   @GetMapping(value = "/{id}", produces = "application/json")
-  @ApiOperation(value = "IDを与えてTODOを取得する", notes = "JSON形式で返る")
+  @ApiOperation(value = "URLパラメータで指定されたIDを持つTODOを取得する", notes = "IDはPK", response = Todo.class)
+  @ApiParam(value = "ID", required = true)
   public ResponseEntity<Todo> showJson(@PathVariable("id") Long id) {
     return ResponseEntity.ok(todoService.selectById(id));
   }
