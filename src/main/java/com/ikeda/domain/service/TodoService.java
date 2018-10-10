@@ -1,6 +1,7 @@
 package com.ikeda.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ikeda.domain.model.Todo;
 import com.ikeda.mapper.TodoMapper;
@@ -25,24 +26,14 @@ public class TodoService {
     return todoMapper.selectById(id);
   }
 
-  // SharedService実装後そちらに記載しこちらは削除
   @Transactional
-  public boolean save(@NonNull final Todo todo) {
-    if (todoMapper.selectById(todo.getId()) == null) {
-      return todoMapper.insert(todo);
-    }
-
-    return todoMapper.update(todo);
-  }
-
-  @Transactional
-  public boolean insert(Todo todo) {
+  public boolean insert(@NonNull Todo todo) {
     return todoMapper.insert(todo);
   }
 
   @Transactional
-  public boolean update(Todo todo) {
-    return todoMapper.update(todo);
+  public boolean update(Long id, @NonNull Todo todo) {
+    return todoMapper.update(id, todo);
   }
 
   @Transactional

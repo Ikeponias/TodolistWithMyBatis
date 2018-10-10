@@ -20,10 +20,10 @@ public class TodoServiceTest {
 
   @Test
   public void データの挿入() {
-    Mockito.when(todoService.save(Mockito.any())).thenReturn(true);
+    Mockito.when(todoService.insert(Mockito.any())).thenReturn(true);
 
     // 実行
-    final Boolean isSuccess = todoService.save(Mockito.any());
+    final Boolean isSuccess = todoService.insert(Mockito.any());
 
     // 検証
     assertThat(isSuccess).isEqualTo(true);
